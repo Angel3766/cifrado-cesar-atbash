@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- =============================================
+       CRYPTOLAB — Página de Descifrado
+       Archivo: descifrar.html
+       Descripción: Permite al usuario pegar un texto
+       cifrado y el sistema detecta automáticamente
+       el método (César o Atbash) y el módulo usado,
+       usando el Índice de Coincidencia (Al-Kindi).
+       ============================================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab — Descifrar</title>
+
+  <!-- Hoja de estilos compartida -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ---- Estilos exclusivos de descifrar.html ---- */
+
+    /* Fila del charset con etiqueta */
+    .charset-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .charset-row label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+      min-width: 100px;
+    }
+
+    /* Fila de botones preset */
+    .preset-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    /* Etiqueta de sección dentro del panel de resultados */
+    .results-section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    /* Caja de IC (Índice de Coincidencia) */
+    .ic-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.75rem;
+      background: rgba(201,168,76,0.07);
+      border: 1px solid var(--border-subtle);
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .ic-value {
+      color: var(--gold);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       BARRA DE NAVEGACIÓN
+       Enlace activo: Descifrar
+       ============================================= -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">⚿ CryptoLab</a>
+    <ul class="navbar-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="cifrar.html">Cifrar</a></li>
+      <li><a href="descifrar.html" class="active">Descifrar</a></li>
+      <li><a href="info.html">Información</a></li>
+    </ul>
+  </nav>
+
+  <!-- =============================================
+       ENCABEZADO DE PÁGINA
+       ============================================= -->
+  <div class="page-header">
+    <span class="ornament">⸻ · ⸻</span>
+    <h1 class="page-title">Descifrar</h1>
+    <p class="page-subtitle">Detección automática del método y módulo · Análisis de frecuencia</p>
+  </div>
+
+  <div class="container">
+
+    <!-- =============================================
+         PANEL 1: CONJUNTO DE CARACTERES
+         Debe coincidir con el charset usado al cifrar
+         para que la detección funcione correctamente.
+         ============================================= -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-dot"></div>
+        <h3>Conjunto de Caracteres</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="info-box">
+          <strong>Importante:</strong> El charset debe ser el mismo que
+          se usó al momento de cifrar el mensaje. Si no coincide,
+          la detección automática no funcionará correctamente.
+        </div>
+
+        <!-- Input del charset -->
+        <div class="field-group">
+          <div class="charset-row">
+            <label>Caracteres:</label>
+            <input type="text" id="charset"
+                   value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                   placeholder="Ej: ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+          </div>
+        </div>
+
+        <!-- Botones de preset rápido -->
+        <div class="preset-row">
+          <button class="preset-btn" id="preset-sin-nye">
+            Estándar sin Ñ (26)
+          </button>
+          <button class="preset-btn" id="preset-con-nye">
+            Estándar con Ñ (27)
+          </button>
+          <button class="preset-btn" id="preset-alfanumerico">
+            Alfanumérico (36)
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =============================================
+         PANEL 2: TEXTO CIFRADO
+         El usuario pega aquí el texto a analizar.
+         ============================================= -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-dot"></div>
+        <h3>Texto Cifrado</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="info-box">
+          <strong>Detección automática:</strong> El sistema prueba todos
+          los módulos posibles de César (fuerza bruta) y también Atbash,
+          calculando el Índice de Coincidencia de cada resultado.
+          El método que produzca el IC más alto es el más probable.
+          Técnica basada en el análisis de frecuencia de
+          <strong>Al-Kindi</strong> (siglo IX d.C.).
+        </div>
+
+        <!-- Textarea del texto cifrado -->
+        <div class="field-group">
+          <label>Pega aquí el texto cifrado</label>
+          <textarea id="ciphertext-in" rows="6"
+                    placeholder="Pega aquí el texto cifrado a analizar..."></textarea>
+        </div>
+
+        <!-- Botón principal de acción -->
+        <button class="btn-primary" id="btn-decrypt">
+          ⌖ ANALIZAR Y DESCIFRAR
+        </button>
+
+      </div>
+    </div>
+
+    <!-- =============================================
+         PANEL 3: RESULTADOS DEL ANÁLISIS
+         Se muestra solo después de presionar el botón.
+         Contiene:
+           - Badge del método detectado
+           - Índice de Coincidencia calculado
+           - Texto descifrado
+           - Tabla de todos los módulos explorados
+         ============================================= -->
+    <div class="panel" id="decode-results" style="display:none">
+      <div class="panel-header">
+        <div class="panel-dot"></div>
+        <h3>Análisis de Descifrado</h3>
+      </div>
+
+      <!-- El contenido de este panel se genera dinámicamente
+           por la función doDecrypt() en app.js -->
+      <div class="panel-body" id="decode-body"></div>
+
+    </div>
+
+  </div><!-- /container -->
+
+  <!-- PIE DE PÁGINA -->
+  <div class="footer">
+    CryptoLab · Técnicas Sistemáticas de Hackeo · Cifrados Clásicos
+  </div>
+
+  <!-- =============================================
+       SCRIPTS
+       crypto.js debe ir antes que app.js ya que
+       app.js llama a funciones definidas en crypto.js.
+       ============================================= -->
+  <script src="js/crypto.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
