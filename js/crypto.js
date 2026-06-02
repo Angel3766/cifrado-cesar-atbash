@@ -227,8 +227,12 @@ function autoDetectAndDecrypt(ciphertext, charset) {
   }
 
   // --- 3. Determinar el método ganador ---
-  // Si el IC de Atbash es mayor o igual al mejor César, se prefiere Atbash
-  const isAtbash = atbashScore >= bestScore;
+  // Se aplica un margen de tolerancia: Atbash solo gana si supera
+  // al mejor César por un margen significativo (5%).
+  // Esto evita falsos positivos con textos cortos donde los IC son similares.
+  const MARGEN = 0.05;
+  const isAtbash = atbashScore > bestScore + (bestScore * MARGEN)
+                   && atbashScore > bestScore;
 
   return {
     method:      isAtbash ? 'atbash' : 'cesar',  // Método detectado
