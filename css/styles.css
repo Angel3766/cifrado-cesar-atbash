@@ -1,0 +1,636 @@
+/* =============================================
+   CRYPTOLAB — Estilos Globales Compartidos
+   Archivo: css/styles.css
+   Descripción: Variables, reset, componentes
+   reutilizables en todas las páginas del proyecto.
+   ============================================= */
+
+/* --------------------------------------------------
+   VARIABLES GLOBALES (Design Tokens)
+   Paleta de colores, tipografía y espaciado base.
+-------------------------------------------------- */
+:root {
+  --gold:          #c9a84c;   /* Dorado principal */
+  --gold-light:    #e8d5a3;   /* Dorado claro (hover) */
+  --gold-dark:     #8b6914;   /* Dorado oscuro */
+  --parchment:     #f5f0e8;   /* Texto principal (crema) */
+  --bg-dark:       #0d0b07;   /* Fondo general oscuro */
+  --green-ok:      #7ecb7e;   /* Verde éxito / César */
+  --red-alert:     #e87e7e;   /* Rojo alerta / Atbash */
+  --border-subtle: rgba(201, 168, 76, 0.2);   /* Borde sutil */
+  --border-mid:    rgba(201, 168, 76, 0.35);  /* Borde medio */
+  --text-muted:    rgba(245, 240, 232, 0.45); /* Texto apagado */
+  --text-dim:      rgba(245, 240, 232, 0.25); /* Texto muy apagado */
+  --panel-bg:      rgba(245, 240, 232, 0.04); /* Fondo de panel */
+  --panel-header:  rgba(201, 168, 76, 0.08);  /* Fondo encabezado panel */
+}
+
+/* --------------------------------------------------
+   RESET BÁSICO
+   Normaliza márgenes, rellenos y box-sizing.
+-------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------------------------------
+   BODY — Base tipográfica y fondo
+-------------------------------------------------- */
+body {
+  background-color: var(--bg-dark);
+  background-image:
+    radial-gradient(ellipse at 20% 0%,   rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(139,105,20,0.06) 0%, transparent 60%);
+  color: var(--parchment);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------
+   TIPOGRAFÍA IMPORTADA
+   Playfair Display → títulos
+   JetBrains Mono  → etiquetas, código, badges
+   Crimson Pro     → cuerpo de texto
+-------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+
+/* --------------------------------------------------
+   NAVEGACIÓN PRINCIPAL
+   Barra superior con logo y enlaces a cada sección.
+-------------------------------------------------- */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(13, 11, 7, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.navbar-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+}
+
+.navbar-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.navbar-links a:hover {
+  color: var(--gold);
+  border-color: var(--border-subtle);
+}
+
+/* Clase activa: resalta la página actual en el menú */
+.navbar-links a.active {
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.1);
+  border-color: var(--border-subtle);
+}
+
+/* --------------------------------------------------
+   ENCABEZADO DE PÁGINA (Hero)
+   Bloque decorativo en la parte superior de cada página.
+-------------------------------------------------- */
+.page-header {
+  text-align: center;
+  padding: 2.5rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Línea decorativa ornamental */
+.ornament {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--gold);
+  letter-spacing: 0.6rem;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+
+/* Título principal de página */
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 0 40px rgba(201, 168, 76, 0.25);
+}
+
+/* Subtítulo en cursiva */
+.page-subtitle {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* --------------------------------------------------
+   CONTENEDOR PRINCIPAL
+   Limita el ancho del contenido y lo centra.
+-------------------------------------------------- */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* --------------------------------------------------
+   PANELES / TARJETAS
+   Bloques visuales con encabezado y cuerpo.
+-------------------------------------------------- */
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.panel-header {
+  background: var(--panel-header);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+  padding: 0.7rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Punto decorativo en el encabezado del panel */
+.panel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.panel-header h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.panel-body {
+  padding: 1.25rem;
+}
+
+/* --------------------------------------------------
+   CAMPOS DE FORMULARIO
+   Inputs, textareas y selects con estilo unificado.
+-------------------------------------------------- */
+.field-group {
+  margin-bottom: 1rem;
+}
+
+.field-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Etiqueta de campo */
+.field-group label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.4rem;
+}
+
+/* Estilo base para inputs y textarea */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  color: var(--parchment);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.75rem;
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 0.04em;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--gold);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.6;
+}
+
+/* Select con flecha dorada personalizada */
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a84c'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+/* --------------------------------------------------
+   BOTÓN PRINCIPAL (CTA)
+   Botón dorado de acción principal.
+-------------------------------------------------- */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--gold);
+  color: var(--bg-dark);
+  border: none;
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-primary:hover  { background: var(--gold-light); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+/* Variante secundaria (contorno) */
+.btn-secondary {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--border-mid);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-secondary:hover { background: rgba(201,168,76,0.1); }
+
+/* --------------------------------------------------
+   ÁREA DE RESULTADO
+   Textarea de solo lectura con botón de copiar.
+-------------------------------------------------- */
+.result-area {
+  position: relative;
+}
+
+.result-area textarea {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(201, 168, 76, 0.15);
+  color: var(--gold);
+  font-size: 0.95rem;
+  cursor: default;
+}
+
+/* Botón de copiar flotante */
+.copy-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid var(--border-mid);
+  color: var(--gold);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.copy-btn:hover { background: rgba(201,168,76,0.22); }
+
+/* --------------------------------------------------
+   BADGES DE DETECCIÓN
+   Etiquetas que identifican el método detectado.
+-------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+/* Verde → César */
+.badge-cesar {
+  background: rgba(26, 92, 26, 0.3);
+  color: var(--green-ok);
+  border: 1px solid rgba(126, 203, 126, 0.3);
+}
+
+/* Rojo → Atbash */
+.badge-atbash {
+  background: rgba(139, 26, 26, 0.3);
+  color: var(--red-alert);
+  border: 1px solid rgba(232, 126, 126, 0.3);
+}
+
+/* --------------------------------------------------
+   CAJA INFORMATIVA
+   Bloque destacado con borde izquierdo dorado.
+-------------------------------------------------- */
+.info-box {
+  padding: 0.75rem 1rem;
+  background: rgba(201, 168, 76, 0.05);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 2px 2px 0;
+  font-size: 0.88rem;
+  color: rgba(245, 240, 232, 0.6);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.info-box strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------
+   DIVISOR
+   Línea horizontal decorativa entre secciones.
+-------------------------------------------------- */
+hr.divider {
+  border: none;
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+  margin: 1.25rem 0;
+}
+
+/* --------------------------------------------------
+   TEXTO DE DETECCIÓN
+   Descripción en cursiva bajo el badge de resultado.
+-------------------------------------------------- */
+.detection-info {
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: 0.4rem;
+}
+
+/* --------------------------------------------------
+   VISUALIZACIÓN DE MAPEO DE CARACTERES
+   Muestra la tabla de sustitución en tiempo real.
+-------------------------------------------------- */
+.char-map {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(201, 168, 76, 0.1);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+}
+
+/* Par de caracteres (original → cifrado) */
+.char-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0.15rem 0.28rem;
+  border-radius: 2px;
+}
+
+.char-pair .orig   { color: rgba(245, 240, 232, 0.35); }
+.char-pair .arrow  { color: rgba(201, 168, 76, 0.3); font-size: 0.5rem; }
+.char-pair .mapped { color: var(--gold); }
+
+/* Par resaltado (primero/último del alfabeto) */
+.char-pair.highlight .orig   { color: rgba(245, 240, 232, 0.9); }
+.char-pair.highlight .mapped { color: var(--green-ok); }
+
+/* --------------------------------------------------
+   PIE DE PÁGINA
+-------------------------------------------------- */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(201, 168, 76, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------
+   CONTROL DE MÓDULO (botones +/−)
+-------------------------------------------------- */
+.shift-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shift-control input[type="number"] {
+  width: 70px;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--gold);
+  padding: 0.38rem 0.5rem;
+}
+
+.shift-btn {
+  width: 30px;
+  height: 30px;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  color: var(--gold);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.shift-btn:hover { background: rgba(201, 168, 76, 0.2); }
+
+/* --------------------------------------------------
+   GRID DE CONFIGURACIÓN (2 columnas)
+-------------------------------------------------- */
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* --------------------------------------------------
+   TABLA DE MÓDULOS EXPLORADOS (descifrado)
+-------------------------------------------------- */
+.modules-scroll {
+  max-height: 210px;
+  overflow-y: auto;
+  display: grid;
+  gap: 3px;
+  margin-top: 0.5rem;
+}
+
+.module-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.28rem 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  border: 1px solid transparent;
+}
+
+/* Fila del módulo ganador */
+.module-row.best {
+  background: rgba(126, 203, 126, 0.07);
+  border-color: rgba(126, 203, 126, 0.18);
+}
+
+.module-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  min-width: 52px;
+  color: rgba(201, 168, 76, 0.5);
+}
+
+.module-row.best .module-label { color: var(--green-ok); }
+
+.module-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.73rem;
+  color: rgba(245, 240, 232, 0.32);
+  word-break: break-all;
+}
+
+.module-row.best .module-text { color: rgba(245, 240, 232, 0.82); }
+
+/* --------------------------------------------------
+   PRESETS DE CHARSET (botones pequeños)
+-------------------------------------------------- */
+.preset-btn {
+  background: rgba(201, 168, 76, 0.07);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.07em;
+}
+
+.preset-btn:hover {
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--gold);
+}
+
+/* --------------------------------------------------
+   PESTAÑAS DE MODO (Cifrar / Descifrar)
+-------------------------------------------------- */
+.mode-tabs {
+  display: flex;
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:last-child { border-right: none; }
+.tab-btn:hover  { color: var(--gold); background: rgba(201,168,76,0.06); }
+.tab-btn.active { background: rgba(201,168,76,0.13); color: var(--gold); }
