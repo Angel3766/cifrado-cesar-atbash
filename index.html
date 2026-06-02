@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- =============================================
+       CRYPTOLAB — Página Principal
+       Archivo: index.html
+       Descripción: Página de bienvenida. Presenta
+       la herramienta y permite navegar a las
+       secciones de cifrado, descifrado e información.
+       ============================================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab — Inicio</title>
+
+  <!-- Hoja de estilos compartida -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ---- Estilos exclusivos de index.html ---- */
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 60px rgba(201,168,76,0.2);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: rgba(245,240,232,0.45);
+      letter-spacing: 0.08em;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .hero-btn-primary {
+      background: var(--gold);
+      color: var(--bg-dark);
+      border: 1px solid var(--gold);
+    }
+    .hero-btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .hero-btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--border-mid);
+    }
+    .hero-btn-secondary:hover {
+      background: rgba(201,168,76,0.08);
+      transform: translateY(-1px);
+    }
+
+    .ornamental-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0 auto 3rem;
+      max-width: 500px;
+      padding: 0 1.5rem;
+    }
+
+    .ornamental-divider::before,
+    .ornamental-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .ornamental-divider span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      opacity: 0.5;
+      white-space: nowrap;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .nav-card {
+      display: block;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 2px;
+      padding: 1.75rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+      transform-origin: left;
+    }
+
+    .nav-card:hover {
+      border-color: var(--border-mid);
+      background: rgba(201,168,76,0.05);
+      transform: translateY(-2px);
+    }
+
+    .nav-card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+      display: block;
+      opacity: 0.85;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-desc {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.92rem;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.55;
+    }
+
+    .card-arrow {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .nav-card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    .features-section {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .features-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      list-style: none;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: rgba(245,240,232,0.5);
+      line-height: 1.5;
+    }
+
+    .feature-bullet {
+      color: var(--gold);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">⚿ CryptoLab</a>
+    <ul class="navbar-links">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="cifrar.html">Cifrar</a></li>
+      <li><a href="descifrar.html">Descifrar</a></li>
+      <li><a href="info.html">Información</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-eyebrow">Técnicas Sistemáticas de Hackeo</span>
+    <h1 class="hero-title">CryptoLab</h1>
+    <p class="hero-subtitle">Cifrados clásicos César &amp; Atbash · Análisis criptográfico</p>
+    <div class="hero-actions">
+      <a href="cifrar.html" class="hero-btn hero-btn-primary">⚿ Cifrar mensaje</a>
+      <a href="descifrar.html" class="hero-btn hero-btn-secondary">⌖ Descifrar mensaje</a>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="ornamental-divider"><span>· · ·</span></div>
+
+    <!-- TARJETAS DE NAVEGACIÓN -->
+    <div class="cards-grid">
+
+      <a href="cifrar.html" class="nav-card">
+        <span class="card-icon">⚿</span>
+        <div class="card-title">Cifrar</div>
+        <p class="card-desc">
+          Cifra cualquier mensaje usando César (con módulo configurable)
+          o Atbash. Define tu propio conjunto de caracteres.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a href="descifrar.html" class="nav-card">
+        <span class="card-icon">⌖</span>
+        <div class="card-title">Descifrar</div>
+        <p class="card-desc">
+          Pega un texto cifrado y el sistema detectará automáticamente
+          el método y el módulo, usando análisis de frecuencia (Al-Kindi).
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a href="info.html" class="nav-card">
+        <span class="card-icon">◎</span>
+        <div class="card-title">Información</div>
+        <p class="card-desc">
+          Aprende sobre el origen de los cifrados César y Atbash, y por
+          qué Al-Kindi los hizo obsoletos hace más de 1,100 años.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+    </div>
+
+    <!-- CARACTERÍSTICAS -->
+    <div class="features-section">
+      <span class="features-label">Características del sistema</span>
+      <ul class="features-list">
+        <li class="feature-item">
+          <span class="feature-bullet">⊛</span>
+          Charset personalizable — usa el conjunto que indique tu docente
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">⊛</span>
+          Módulo configurable en César (desplazamiento de 1 a n−1)
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">⊛</span>
+          Detección automática del método y módulo en descifrado
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">⊛</span>
+          Visualización en tiempo real del mapeo de caracteres
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">⊛</span>
+          Análisis por fuerza bruta con Índice de Coincidencia (Al-Kindi)
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">⊛</span>
+          Código documentado y estructurado en múltiples archivos
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    CryptoLab · Técnicas Sistemáticas de Hackeo · Cifrados Clásicos
+  </div>
+
+</body>
+</html>
