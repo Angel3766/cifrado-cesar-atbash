@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- =============================================
+       CRYPTOLAB — Página de Información
+       Archivo: info.html
+       Descripción: Explica el origen histórico de
+       los cifrados César y Atbash, la contribución
+       de Al-Kindi al criptoanálisis y por qué estos
+       métodos ya no son seguros hoy en día.
+       ============================================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab — Información</title>
+
+  <!-- Hoja de estilos compartida -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ---- Estilos exclusivos de info.html ---- */
+
+    /* Artículo de contenido largo (prosa) */
+    .article {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Sección de artículo con separador superior */
+    .article-section {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .article-section:last-child {
+      border-bottom: none;
+    }
+
+    /* Etiqueta de categoría sobre el título */
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0.65;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Título de sección */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    /* Párrafo de contenido */
+    .article p {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.05rem;
+      color: rgba(245,240,232,0.65);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .article p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Texto resaltado dorado dentro de párrafos */
+    .article strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* Fórmula matemática en bloque */
+    .formula-block {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border-subtle);
+      border-left: 2px solid var(--gold);
+      border-radius: 0 2px 2px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--gold);
+      line-height: 1.8;
+    }
+
+    /* Etiqueta de la fórmula */
+    .formula-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Tabla de comparación */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+    }
+
+    .comparison-table th {
+      background: rgba(201,168,76,0.1);
+      color: var(--gold);
+      padding: 0.6rem 1rem;
+      text-align: left;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .comparison-table td {
+      padding: 0.6rem 1rem;
+      color: rgba(245,240,232,0.55);
+      border-bottom: 1px solid rgba(201,168,76,0.06);
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table td:first-child {
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Tarjeta de cita histórica */
+    .quote-card {
+      background: rgba(201,168,76,0.04);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 2px 2px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .quote-text {
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(245,240,232,0.7);
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-author {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+    }
+
+    /* Grid de tarjetas de datos (por qué ya no son seguros) */
+    .danger-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .danger-card {
+      background: rgba(139,26,26,0.12);
+      border: 1px solid rgba(232,126,126,0.2);
+      border-radius: 2px;
+      padding: 1rem 1.1rem;
+    }
+
+    .danger-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--red-alert);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .danger-card-text {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.9rem;
+      color: rgba(245,240,232,0.5);
+      line-height: 1.5;
+    }
+
+    /* Línea de tiempo horizontal de Al-Kindi */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 1.25rem 0;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.35rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 1px;
+      background: var(--border-subtle);
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      position: relative;
+    }
+
+    /* Punto de la línea de tiempo */
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.18rem;
+      top: 1rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .timeline-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      opacity: 0.8;
+      min-width: 65px;
+      margin-top: 0.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-text {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.95rem;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.5;
+    }
+
+    .timeline-text strong {
+      color: rgba(245,240,232,0.85);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       BARRA DE NAVEGACIÓN
+       Enlace activo: Información
+       ============================================= -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">⚿ CryptoLab</a>
+    <ul class="navbar-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="cifrar.html">Cifrar</a></li>
+      <li><a href="descifrar.html">Descifrar</a></li>
+      <li><a href="info.html" class="active">Información</a></li>
+    </ul>
+  </nav>
+
+  <!-- =============================================
+       ENCABEZADO DE PÁGINA
+       ============================================= -->
+  <div class="page-header">
+    <span class="ornament">⸻ · ⸻</span>
+    <h1 class="page-title">Información</h1>
+    <p class="page-subtitle">Historia, matemáticas y vulnerabilidades de los cifrados clásicos</p>
+  </div>
+
+  <div class="container">
+    <div class="article">
+
+      <!-- =============================================
+           SECCIÓN 1: CIFRADO CÉSAR
+           ============================================= -->
+      <div class="article-section">
+        <span class="section-eyebrow">Siglo I a.C.</span>
+        <h2 class="section-title">El Cifrado César</h2>
+
+        <p>
+          El cifrado César lleva el nombre de <strong>Julio César</strong> (100–44 a.C.),
+          quien lo usaba para comunicarse con sus generales de forma que los enemigos
+          no pudieran leer sus mensajes si los interceptaban. Es uno de los sistemas
+          criptográficos más antiguos documentados de la historia.
+        </p>
+
+        <p>
+          El principio es simple: cada letra del mensaje original se sustituye por otra
+          letra que se encuentra <strong>n posiciones más adelante</strong> en el alfabeto,
+          donde n es el módulo o clave del cifrado. Al llegar al final del alfabeto,
+          se vuelve a contar desde el inicio de manera circular.
+        </p>
+
+        <!-- Fórmula matemática del cifrado César -->
+        <div class="formula-block">
+          <span class="formula-label">Fórmula de cifrado</span>
+          E(x) = (x + n) mod m
+          <br><br>
+          <span class="formula-label">Fórmula de descifrado</span>
+          D(x) = (x − n + m) mod m
+          <br><br>
+          Donde: x = posición del carácter · n = módulo (clave) · m = tamaño del charset
+        </div>
+
+        <p>
+          Por ejemplo, con un módulo de <strong>3</strong> y el alfabeto estándar de 26 letras:
+          la letra A (posición 0) se convierte en D (posición 3), la B en E, y así sucesivamente.
+          La X (posición 23) se convierte en A (posición 0), envolviendo circularmente.
+        </p>
+
+        <!-- Tabla de ejemplo de cifrado César -->
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Original</th>
+              <th>A</th><th>B</th><th>C</th><th>D</th><th>E</th>
+              <th>...</th>
+              <th>X</th><th>Y</th><th>Z</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cifrado (n=3)</td>
+              <td>D</td><td>E</td><td>F</td><td>G</td><td>H</td>
+              <td>...</td>
+              <td>A</td><td>B</td><td>C</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          César usaba principalmente un desplazamiento de 3, pero el método funciona
+          con cualquier valor de n entre 1 y m−1. Con el alfabeto estándar de 26 letras,
+          existen solo <strong>25 claves posibles</strong>, lo que hoy en día representa
+          una seguridad prácticamente nula.
+        </p>
+      </div>
+
+      <!-- =============================================
+           SECCIÓN 2: CIFRADO ATBASH
+           ============================================= -->
+      <div class="article-section">
+        <span class="section-eyebrow">Antigüedad · Origen hebreo</span>
+        <h2 class="section-title">El Cifrado Atbash</h2>
+
+        <p>
+          El cifrado Atbash tiene origen en la tradición hebraica y su nombre proviene
+          de las primeras y últimas letras del alfabeto hebreo:
+          <strong>Aleph (א)</strong>, <strong>Tav (ת)</strong>,
+          <strong>Bet (ב)</strong> y <strong>Shin (ש)</strong> — AT-BASH.
+          Aparece mencionado en el libro bíblico de Jeremías para ocultar nombres propios.
+        </p>
+
+        <p>
+          El principio del Atbash es la <strong>sustitución especular</strong>: la primera
+          letra del alfabeto se sustituye por la última, la segunda por la penúltima, y así
+          sucesivamente. Es un caso especial de cifrado César donde el desplazamiento produce
+          exactamente la imagen espejo del alfabeto.
+        </p>
+
+        <!-- Fórmula matemática del cifrado Atbash -->
+        <div class="formula-block">
+          <span class="formula-label">Fórmula matemática</span>
+          A(x) = (m − 1 − x)
+          <br><br>
+          Donde: x = posición del carácter · m = tamaño del charset
+          <br><br>
+          Propiedad notable: A(A(x)) = x — Atbash es su propio inverso.
+          Aplicarlo dos veces regresa al texto original.
+        </td>
+        </div>
+
+        <p>
+          Una característica matemáticamente interesante del Atbash es que <strong>es
+          su propio inverso</strong>: para descifrar un mensaje codificado con Atbash,
+          simplemente se aplica Atbash nuevamente. No existe una clave separada de
+          cifrado y descifrado.
+        </p>
+
+        <!-- Ejemplo de sustitución Atbash -->
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Original</th>
+              <th>A</th><th>B</th><th>C</th>
+              <th>...</th>
+              <th>M</th><th>N</th>
+              <th>...</th>
+              <th>X</th><th>Y</th><th>Z</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Atbash</td>
+              <td>Z</td><td>Y</td><td>X</td>
+              <td>...</td>
+              <td>N</td><td>M</td>
+              <td>...</td>
+              <td>C</td><td>B</td><td>A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- =============================================
+           SECCIÓN 3: AL-KINDI Y EL ANÁLISIS DE FRECUENCIA
+           ============================================= -->
+      <div class="article-section">
+        <span class="section-eyebrow">Siglo IX d.C. · Bagdad</span>
+        <h2 class="section-title">Al-Kindi y el Análisis de Frecuencia</h2>
+
+        <p>
+          <strong>أبو يوسف يعقوب بن إسحاق الكندي</strong> — Abu Yusuf Yaqub ibn Ishaq
+          al-Kindi (801–873 d.C.) — fue el primer gran filósofo del mundo islámico y
+          uno de los pensadores más influyentes de la Edad Media. Nació en Basra (actual
+          Iraq) y trabajó en Bagdad durante el período conocido como la Casa de la Sabiduría.
+        </p>
+
+        <div class="quote-card">
+          <p class="quote-text">
+            "Una forma de resolver un mensaje cifrado, si sabemos en qué lengua está escrito,
+            es obtener un texto distinto y diferente en esa misma lengua, lo suficientemente
+            largo para llenar una hoja o más, y contamos las ocurrencias de cada letra..."
+          </p>
+          <span class="quote-author">
+            — Al-Kindi · Risala fi Istikhraj al-Mu'amma (c. 850 d.C.)
+          </span>
+        </div>
+
+        <p>
+          En su manuscrito <strong>Risala fi Istikhraj al-Mu'amma</strong> ("Manuscrito
+          sobre el descifrado de mensajes criptográficos"), Al-Kindi describió por primera
+          vez el <strong>análisis de frecuencia</strong>: la observación de que en cualquier
+          idioma, ciertas letras aparecen con mucha más frecuencia que otras.
+        </p>
+
+        <p>
+          En español, por ejemplo, la <strong>E</strong> es la letra más frecuente (~13%),
+          seguida de la A (~12%) y la O (~9%). Si en un texto cifrado con César la letra
+          más frecuente es la H, es razonable deducir que H = E, lo que revela
+          inmediatamente el módulo usado (3 en este caso).
+        </p>
+
+        <!-- Línea de tiempo histórica -->
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-year">~50 a.C.</span>
+            <span class="timeline-text">
+              <strong>Julio César</strong> usa el cifrado de desplazamiento para
+              comunicaciones militares con módulo 3.
+            </span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-year">~600 a.C.</span>
+            <span class="timeline-text">
+              El <strong>cifrado Atbash</strong> aparece en textos hebreos,
+              incluyendo el libro de Jeremías.
+            </span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-year">~850 d.C.</span>
+            <span class="timeline-text">
+              <strong>Al-Kindi</strong> escribe el primer tratado de criptoanálisis,
+              describiendo el análisis de frecuencia y rompiendo los cifrados de
+              sustitución simple.
+            </span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-year">1922</span>
+            <span class="timeline-text">
+              <strong>William Friedman</strong> formaliza matemáticamente el
+              Índice de Coincidencia, versión cuantitativa del análisis de Al-Kindi.
+            </span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-year">Hoy</span>
+            <span class="timeline-text">
+              Una computadora moderna puede romper cualquier cifrado César en
+              <strong>microsegundos</strong> probando los 25 módulos posibles.
+            </span>
+          </div>
+        </div>
+
+        <!-- Fórmula del Índice de Coincidencia -->
+        <div class="formula-block">
+          <span class="formula-label">Índice de Coincidencia (Friedman, 1922)</span>
+          IC = Σ [ f(c) × (f(c) − 1) ] / [ N × (N − 1) ]
+          <br><br>
+          f(c) = frecuencia del carácter c · N = total de caracteres
+          <br>
+          Español: IC ≈ 0.077 · Inglés: IC ≈ 0.065 · Aleatorio: IC ≈ 1/m
+        </div>
+
+        <p>
+          CryptoLab implementa esta técnica en su modo de descifrado automático:
+          prueba todos los módulos posibles de César y también Atbash, calcula el
+          Índice de Coincidencia de cada resultado, y selecciona el que produzca
+          el IC más alto, que corresponde al texto más "natural".
+        </p>
+      </div>
+
+      <!-- =============================================
+           SECCIÓN 4: ¿POR QUÉ YA NO SON SEGUROS?
+           ============================================= -->
+      <div class="article-section">
+        <span class="section-eyebrow">Seguridad moderna</span>
+        <h2 class="section-title">¿Por qué ya no son viables?</h2>
+
+        <p>
+          A pesar de su valor histórico y educativo, tanto el cifrado César como
+          el Atbash son <strong>completamente inseguros</strong> para proteger
+          información en la actualidad. Existen múltiples razones para esto:
+        </p>
+
+        <!-- Tarjetas de vulnerabilidades -->
+        <div class="danger-grid">
+
+          <div class="danger-card">
+            <div class="danger-card-title">⚠ Espacio de claves mínimo</div>
+            <p class="danger-card-text">
+              César solo tiene m−1 claves posibles (25 para el alfabeto estándar).
+              Una computadora las prueba todas en microsegundos.
+            </p>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-card-title">⚠ Sin clave en Atbash</div>
+            <p class="danger-card-text">
+              Atbash no tiene ninguna clave variable. El mapeo es siempre
+              idéntico, por lo que no hay nada que adivinar.
+            </p>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-card-title">⚠ Sustitución monoalfabética</div>
+            <p class="danger-card-text">
+              Cada letra siempre se cifra de la misma forma. Las frecuencias
+              de aparición se conservan, lo que permite el análisis de Al-Kindi.
+            </p>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-card-title">⚠ Fuerza bruta trivial</div>
+            <p class="danger-card-text">
+              Con hardware moderno, probar todos los módulos posibles de cualquier
+              charset es una operación instantánea.
+            </p>
+          </div>
+
+        </div>
+
+        <p>
+          Los estándares modernos de cifrado como <strong>AES-256</strong> o
+          <strong>RSA-2048</strong> tienen espacios de claves astronómicamente grandes
+          (2²⁵⁶ posibilidades para AES) y no preservan las frecuencias de caracteres,
+          haciendo imposible el análisis de frecuencia. Su seguridad está basada en
+          problemas matemáticos computacionalmente difíciles, no en el secreto del
+          algoritmo.
+        </p>
+
+        <!-- Tabla comparativa de métodos -->
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th>César</th>
+              <th>Atbash</th>
+              <th>AES-256</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Claves posibles</td>
+              <td>m − 1</td>
+              <td>1 (fija)</td>
+              <td>2²⁵⁶</td>
+            </tr>
+            <tr>
+              <td>Vulnerable a frecuencia</td>
+              <td>Sí</td>
+              <td>Sí</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Fuerza bruta factible</td>
+              <td>Sí (ms)</td>
+              <td>No aplica</td>
+              <td>No (siglos)</td>
+            </tr>
+            <tr>
+              <td>Uso recomendado hoy</td>
+              <td>Solo educativo</td>
+              <td>Solo educativo</td>
+              <td>Producción</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div><!-- /article -->
+  </div><!-- /container -->
+
+  <!-- PIE DE PÁGINA -->
+  <div class="footer">
+    CryptoLab · Técnicas Sistemáticas de Hackeo · Cifrados Clásicos
+  </div>
+
+  <!-- No se necesitan scripts en esta página (solo contenido estático) -->
+
+</body>
+</html>
